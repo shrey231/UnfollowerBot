@@ -26,10 +26,21 @@ class InstaBot:
         self.driver.find_element_by_xpath("/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div[4]") \
             .click()
         sleep(5)
-
-    def __home__(self):
-        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[3]/button[2]") \
+        self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div/div/button")\
             .click()
+        sleep(3)
+        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[3]/button[2]") \
+            .click()
+        sleep(3)
+        try:
+            self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/div/div/div/button")\
+                .click()
+            sleep(3)
+        except:
+            pass
+    def __home__(self):
+        #self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[3]/button[2]") \
+         #   .click()
         sleep(2)
         #Enters user profile using one of two methods
         try:
@@ -44,7 +55,7 @@ class InstaBot:
                 self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input") \
                     .send_keys(Keys.ENTER)
                 sleep(1)
-                self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/div[2]/div[2]/div/a[1]/div/div[2]/div/span") \
+                self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[2]/div[3]/div[2]/div/a/div/div[2]/span") \
                     .click()
                 sleep(2)
             except:
@@ -54,7 +65,7 @@ class InstaBot:
         self.driver.find_element_by_xpath(paths) \
             .click()
         sleep(1)
-        popupBox = self.driver.find_element_by_xpath("/html/body/div[4]/div/div[2]")
+        popupBox = self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[2]")
         tempHeight =1
         finalHeight =0
         #If suggestions box is present - modified counter
@@ -64,7 +75,7 @@ class InstaBot:
             sleep(2)
             while True:
                 self.driver.execute_script("arguments[0].scrollTo(0,arguments[0].scrollHeight);",popupBox)
-                sleep(0.8)
+                sleep(2)
                 tempHeight = self.driver.execute_script("return arguments[0].scrollHeight;",popupBox)
                 if tempHeight == finalHeight:
                     break
@@ -74,7 +85,7 @@ class InstaBot:
             try:
                 while True:
                     self.driver.execute_script("arguments[0].scrollTo(0,arguments[0].scrollHeight);",popupBox)
-                    sleep(0.8)
+                    sleep(2)
                     tempHeight = self.driver.execute_script("return arguments[0].scrollHeight;",popupBox)
                     if tempHeight == finalHeight:
                         break
@@ -85,8 +96,9 @@ class InstaBot:
 
         links = popupBox.find_elements_by_tag_name('a')
         names = [name.text for name in links if name.text != '']
-        self.driver.find_element_by_xpath("/html/body/div[4]/div/div[1]/div/div[2]/button") \
+        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button/div") \
             .click()
+
         return names
 
     def __unfollowers__(self):
